@@ -161,7 +161,7 @@ BACKEND_DESIRED_COUNT  = 1
 # DATABASE
 DB_TASK_FAMILY    = "dev-db"
 DB_SERVICE_NAME   = "dev-db-service"
-DB_IMAGE          = "postgres:16-alpine"
+DB_IMAGE          = "mysql:8.0"
 DB_CONTAINER_PORT = 3306
 DB_CPU            = 512
 DB_MEMORY         = 1024
