@@ -103,16 +103,16 @@ resource "aws_ecs_task_definition" "this_db_task_definition" {
           protocol      = "tcp"
         }
       ]
-      //environment = [
-        //{
-         // name  = "POSTGRES_PASSWORD"
-         // value = var.DB_PASSWORD
-       // },
-       // {
-         // name  = "POSTGRES_DB"
-         // value = var.DB_NAME
-        //}
-     // ]
+      environment = [
+        {
+          name  = "MYSQL_ROOT_PASSWORD"
+          value = var.DB_PASSWORD
+        },
+        {
+          name  = "MYSQL_DATABASE"
+          value = var.DB_NAME
+        }
+      ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
