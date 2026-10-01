@@ -197,10 +197,16 @@ variable "DB_MEMORY" {
 variable "DB_DESIRED_COUNT" {
   type = number
 }
+variable "DB_NAME" {
+  type = string
+}
+variable "MYSQL_HOST" {
+  type = string
+}
 variable "DB_PASSWORD" {
   type      = string
   sensitive = true
 }
-variable "DB_NAME" {
+variable "DB_USER" {
   type = string
 }
