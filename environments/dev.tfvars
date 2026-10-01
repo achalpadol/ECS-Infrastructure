@@ -149,7 +149,7 @@ FRONTEND_IMAGE          = "hashicorp/http-echo:1.0"
 FRONTEND_CONTAINER_PORT = 80
 FRONTEND_CPU            = 256
 FRONTEND_MEMORY         = 512
-FRONTEND_DESIRED_COUNT  = 2
+FRONTEND_DESIRED_COUNT  = 1
 # BACKEND
 BACKEND_TASK_FAMILY    = "dev-backend"
 BACKEND_SERVICE_NAME   = "dev-backend-service"
@@ -157,7 +157,7 @@ BACKEND_IMAGE          = "hashicorp/http-echo:1.0"
 BACKEND_CONTAINER_PORT = 8080
 BACKEND_CPU            = 256
 BACKEND_MEMORY         = 512
-BACKEND_DESIRED_COUNT  = 2
+BACKEND_DESIRED_COUNT  = 1
 # DATABASE
 DB_TASK_FAMILY    = "dev-db"
 DB_SERVICE_NAME   = "dev-db-service"
