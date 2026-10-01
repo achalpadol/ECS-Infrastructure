@@ -12,10 +12,6 @@ resource "aws_ecs_task_definition" "this_frontend_task_definition" {
       name      = "frontend"
       image     = var.FRONTEND_IMAGE
       essential = true
-      command = [
-        "-listen=:8000",
-        "-text=Hello from Frontend ECS"
-      ]
       portMappings = [
         {
           containerPort = var.FRONTEND_CONTAINER_PORT
@@ -55,11 +51,6 @@ resource "aws_ecs_task_definition" "this_backend_task_definition" {
       name      = "backend"
       image     = var.BACKEND_IMAGE
       essential = true
-
-      command = [
-        "-listen=:8000",
-        "-text=Hello from Backend ECS"
-      ]
       environment = [
         {
           name  = "BACKEND_HOST"
