@@ -29,6 +29,9 @@ variable "FRONTEND_CPU" {
 variable "FRONTEND_MEMORY" {
   type = number
 }
+variable "BACKEND_HOST" {
+  type = string
+}
 # BACKEND
 variable "BACKEND_TASK_FAMILY" {
   type = string
