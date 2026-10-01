@@ -1,4 +1,4 @@
-git status
+
 variable "AWS_REGION" {
   type = string
 }
