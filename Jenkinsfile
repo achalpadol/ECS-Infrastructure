@@ -18,21 +18,27 @@ pipeline {
 
     environment {
         AWS_REGION = 'ap-south-1'
+        AWS_DEFAULT_REGION = 'ap-south-1'
     }
 
     stages {
 
         stage('Terraform Init') {
             steps {
-                sh '''
-                    echo "========================================"
-                    echo "Terraform Init"
-                    echo "Environment: ${Environment}"
-                    echo "========================================"
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-credentials']
+                ]) {
+                    sh '''
+                        echo "========================================"
+                        echo "Terraform Init"
+                        echo "Environment: ${Environment}"
+                        echo "========================================"
 
-                    terraform init -reconfigure \
-                        -backend-config="key=ecs-infrastructure/${Environment}/terraform.tfstate"
-                '''
+                        terraform init -reconfigure \
+                            -backend-config="key=ecs-infrastructure/${Environment}/terraform.tfstate"
+                    '''
+                }
             }
         }
 
@@ -45,13 +51,18 @@ pipeline {
             }
 
             steps {
-                sh '''
-                    echo "========================================"
-                    echo "Terraform Validate"
-                    echo "========================================"
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-credentials']
+                ]) {
+                    sh '''
+                        echo "========================================"
+                        echo "Terraform Validate"
+                        echo "========================================"
 
-                    terraform validate
-                '''
+                        terraform validate
+                    '''
+                }
             }
         }
 
@@ -63,15 +74,20 @@ pipeline {
             }
 
             steps {
-                sh '''
-                    echo "========================================"
-                    echo "Terraform Plan"
-                    echo "Environment: ${Environment}"
-                    echo "========================================"
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-credentials']
+                ]) {
+                    sh '''
+                        echo "========================================"
+                        echo "Terraform Plan"
+                        echo "Environment: ${Environment}"
+                        echo "========================================"
 
-                    terraform plan \
-                        -var-file="environments/${Environment}.tfvars"
-                '''
+                        terraform plan \
+                            -var-file="environments/${Environment}.tfvars"
+                    '''
+                }
             }
         }
 
@@ -83,16 +99,21 @@ pipeline {
             }
 
             steps {
-                sh '''
-                    echo "========================================"
-                    echo "Terraform Apply"
-                    echo "Environment: ${Environment}"
-                    echo "========================================"
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-credentials']
+                ]) {
+                    sh '''
+                        echo "========================================"
+                        echo "Terraform Apply"
+                        echo "Environment: ${Environment}"
+                        echo "========================================"
 
-                    terraform apply \
-                        -var-file="environments/${Environment}.tfvars" \
-                        -auto-approve
-                '''
+                        terraform apply \
+                            -var-file="environments/${Environment}.tfvars" \
+                            -auto-approve
+                    '''
+                }
             }
         }
 
@@ -104,16 +125,21 @@ pipeline {
             }
 
             steps {
-                sh '''
-                    echo "========================================"
-                    echo "Terraform Destroy"
-                    echo "Environment: ${Environment}"
-                    echo "========================================"
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-credentials']
+                ]) {
+                    sh '''
+                        echo "========================================"
+                        echo "Terraform Destroy"
+                        echo "Environment: ${Environment}"
+                        echo "========================================"
 
-                    terraform destroy \
-                        -var-file="environments/${Environment}.tfvars" \
-                        -auto-approve
-                '''
+                        terraform destroy \
+                            -var-file="environments/${Environment}.tfvars" \
+                            -auto-approve
+                    '''
+                }
             }
         }
     }
