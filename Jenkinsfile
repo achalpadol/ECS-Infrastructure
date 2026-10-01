@@ -27,7 +27,11 @@ pipeline {
             steps {
                 withCredentials([
                     [$class: 'AmazonWebServicesCredentialsBinding',
+<<<<<<< HEAD
                      credentialsId: 'aws-credentials']
+=======
+                     credentialsId: 'aws']
+>>>>>>> b7198cc (change Jenkinsfile)
                 ]) {
                     sh '''
                         echo "========================================"
@@ -53,7 +57,11 @@ pipeline {
             steps {
                 withCredentials([
                     [$class: 'AmazonWebServicesCredentialsBinding',
+<<<<<<< HEAD
                      credentialsId: 'aws-credentials']
+=======
+                     credentialsId: 'aws']
+>>>>>>> b7198cc (change Jenkinsfile)
                 ]) {
                     sh '''
                         echo "========================================"
@@ -76,7 +84,11 @@ pipeline {
             steps {
                 withCredentials([
                     [$class: 'AmazonWebServicesCredentialsBinding',
+<<<<<<< HEAD
                      credentialsId: 'aws-credentials']
+=======
+                     credentialsId: 'aws']
+>>>>>>> b7198cc (change Jenkinsfile)
                 ]) {
                     sh '''
                         echo "========================================"
@@ -101,7 +113,11 @@ pipeline {
             steps {
                 withCredentials([
                     [$class: 'AmazonWebServicesCredentialsBinding',
+<<<<<<< HEAD
                      credentialsId: 'aws-credentials']
+=======
+                     credentialsId: 'aws']
+>>>>>>> b7198cc (change Jenkinsfile)
                 ]) {
                     sh '''
                         echo "========================================"
@@ -127,7 +143,11 @@ pipeline {
             steps {
                 withCredentials([
                     [$class: 'AmazonWebServicesCredentialsBinding',
+<<<<<<< HEAD
                      credentialsId: 'aws-credentials']
+=======
+                     credentialsId: 'aws']
+>>>>>>> b7198cc (change Jenkinsfile)
                 ]) {
                     sh '''
                         echo "========================================"
