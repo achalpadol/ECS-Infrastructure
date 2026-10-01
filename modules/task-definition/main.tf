@@ -41,7 +41,7 @@ resource "aws_ecs_task_definition" "this_frontend_task_definition" {
     }
   )
 }
-# BACKEND TASK DEFINITION
+#BACKEND TASK-DEFINITION
 resource "aws_ecs_task_definition" "this_backend_task_definition" {
   family                   = var.BACKEND_TASK_FAMILY
   requires_compatibilities = ["FARGATE"]
@@ -49,6 +49,7 @@ resource "aws_ecs_task_definition" "this_backend_task_definition" {
   cpu                      = var.BACKEND_CPU
   memory                   = var.BACKEND_MEMORY
   execution_role_arn       = var.ECS_EXECUTION_ROLE_ARN
+
   container_definitions = jsonencode([
     {
       name      = "backend"
@@ -59,6 +60,7 @@ resource "aws_ecs_task_definition" "this_backend_task_definition" {
         "-listen=:8000",
         "-text=Hello from Backend ECS"
       ]
+
       portMappings = [
         {
           containerPort = var.BACKEND_CONTAINER_PORT
@@ -66,8 +68,29 @@ resource "aws_ecs_task_definition" "this_backend_task_definition" {
           protocol      = "tcp"
         }
       ]
+
+      environment = [
+        {
+          name  = "MYSQL_DATABASE"
+          value = var.DB_NAME
+        },
+        {
+          name  = "MYSQL_HOST"
+          value = var.MYSQL_HOST
+        },
+        {
+          name  = "MYSQL_ROOT_PASSWORD"
+          value = var.DB_PASSWORD
+        },
+        {
+          name  = "MYSQL_USER"
+          value = var.DB_USER
+        }
+      ]
+
       logConfiguration = {
         logDriver = "awslogs"
+
         options = {
           awslogs-group         = var.LOG_GROUP_NAME
           awslogs-region        = var.AWS_REGION
@@ -76,6 +99,7 @@ resource "aws_ecs_task_definition" "this_backend_task_definition" {
       }
     }
   ])
+
   tags = merge(
     var.COMMON_TAGS,
     {
