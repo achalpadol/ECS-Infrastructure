@@ -167,6 +167,6 @@ DB_CPU            = 512
 DB_MEMORY         = 1024
 DB_DESIRED_COUNT  = 1
 DB_NAME           = "example"
-MYSQL_HOST        = "db"
+MYSQL_HOST        = "db.ecs.dev.local"
 DB_PASSWORD       = "Achal123"
 DB_USER           = "root"
