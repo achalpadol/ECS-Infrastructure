@@ -150,7 +150,6 @@ FRONTEND_CONTAINER_PORT = 80
 FRONTEND_CPU            = 256
 FRONTEND_MEMORY         = 512
 FRONTEND_DESIRED_COUNT  = 1
-BACKEND_HOST            = "backend.ecs.dev.local"
 # BACKEND
 BACKEND_TASK_FAMILY    = "dev-backend"
 BACKEND_SERVICE_NAME   = "dev-backend-service"
