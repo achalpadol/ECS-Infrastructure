@@ -95,6 +95,8 @@ module "ecs_task_definition" {
   DB_MEMORY         = var.DB_MEMORY
   DB_PASSWORD       = var.DB_PASSWORD
   DB_NAME           = var.DB_NAME
+  MYSQL_HOST        = var.MYSQL_HOST
+  DB_USER           = var.DB_USER
 }
 # ECS SERVICES
 module "ecs_service" {
