@@ -145,7 +145,7 @@ ECS_CLUSTER_NAME = "dev-app-cluster"
 # FRONTEND
 FRONTEND_TASK_FAMILY    = "dev-frontend"
 FRONTEND_SERVICE_NAME   = "dev-frontend-service"
-FRONTEND_IMAGE          = "hashicorp/http-echo:1.0"
+FRONTEND_IMAGE          = "nginx:latest"
 FRONTEND_CONTAINER_PORT = 80
 FRONTEND_CPU            = 256
 FRONTEND_MEMORY         = 512
