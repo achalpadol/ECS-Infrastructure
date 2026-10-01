@@ -51,12 +51,7 @@ resource "aws_ecs_task_definition" "this_backend_task_definition" {
       name      = "backend"
       image     = var.BACKEND_IMAGE
       essential = true
-      environment = [
-        {
-          name  = "BACKEND_HOST"
-          value = var.BACKEND_HOST
-        }
-      ]
+  
       portMappings = [
         {
           containerPort = var.BACKEND_CONTAINER_PORT
