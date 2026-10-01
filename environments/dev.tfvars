@@ -56,8 +56,8 @@ SECURITY_GROUPS = {
     ingress_rules = [
       {
         description                = "Allow application traffic from ALB"
-        from_port                  = 8000
-        to_port                    = 8000
+        from_port                  = 8080
+        to_port                    = 8080
         protocol                   = "tcp"
         source_security_group_name = "alb"
       }
@@ -79,8 +79,8 @@ SECURITY_GROUPS = {
     ingress_rules = [
       {
         description                = "Allow PostgreSQL traffic from ECS"
-        from_port                  = 5432
-        to_port                    = 5432
+        from_port                  = 3306
+        to_port                    = 3306
         protocol                   = "tcp"
         source_security_group_name = "ecs"
       }
@@ -137,7 +137,7 @@ CLOUD_MAP_SERVICES = {
 #ALB
 ALB_NAME                   = "dev-app-alb"
 TARGET_GROUP_NAME          = "dev-app-tg"
-TARGET_GROUP_PORT          = 8000
+TARGET_GROUP_PORT          = 80
 HEALTH_CHECK_PATH          = "/"
 ENABLE_DELETION_PROTECTION = false
 # ECS CLUSTER
@@ -146,7 +146,7 @@ ECS_CLUSTER_NAME = "dev-app-cluster"
 FRONTEND_TASK_FAMILY    = "dev-frontend"
 FRONTEND_SERVICE_NAME   = "dev-frontend-service"
 FRONTEND_IMAGE          = "hashicorp/http-echo:1.0"
-FRONTEND_CONTAINER_PORT = 8000
+FRONTEND_CONTAINER_PORT = 80
 FRONTEND_CPU            = 256
 FRONTEND_MEMORY         = 512
 FRONTEND_DESIRED_COUNT  = 2
@@ -154,7 +154,7 @@ FRONTEND_DESIRED_COUNT  = 2
 BACKEND_TASK_FAMILY    = "dev-backend"
 BACKEND_SERVICE_NAME   = "dev-backend-service"
 BACKEND_IMAGE          = "hashicorp/http-echo:1.0"
-BACKEND_CONTAINER_PORT = 8000
+BACKEND_CONTAINER_PORT = 8080
 BACKEND_CPU            = 256
 BACKEND_MEMORY         = 512
 BACKEND_DESIRED_COUNT  = 2
@@ -162,7 +162,7 @@ BACKEND_DESIRED_COUNT  = 2
 DB_TASK_FAMILY    = "dev-db"
 DB_SERVICE_NAME   = "dev-db-service"
 DB_IMAGE          = "postgres:16-alpine"
-DB_CONTAINER_PORT = 5432
+DB_CONTAINER_PORT = 3306
 DB_CPU            = 512
 DB_MEMORY         = 1024
 DB_DESIRED_COUNT  = 1
