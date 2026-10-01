@@ -153,6 +153,9 @@ variable "FRONTEND_MEMORY" {
 variable "FRONTEND_DESIRED_COUNT" {
   type = number
 }
+variable "BACKEND_HOST" {
+  type = string
+}
 # BACKEND TASK DEFINITION
 variable "BACKEND_TASK_FAMILY" {
   type = string
