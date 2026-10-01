@@ -61,10 +61,16 @@ variable "DB_CPU" {
 variable "DB_MEMORY" {
   type = number
 }
+variable "DB_NAME" {
+  type = string
+}
+variable "MYSQL_HOST" {
+  type = string
+}
 variable "DB_PASSWORD" {
   type      = string
   sensitive = true
 }
-variable "DB_NAME" {
+variable "DB_USER" {
   type = string
 }
