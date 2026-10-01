@@ -29,17 +29,17 @@ pipeline {
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws']
                 ]) {
-                    sh '''
+                    sh """
                         echo "========================================"
                         echo "Terraform Init"
-                        echo "Environment: ${Environment}"
+                        echo "Environment: ${params.Environment}"
                         echo "========================================"
 
                         aws sts get-caller-identity
 
                         terraform init -reconfigure \
-                            -backend-config="key=ecs-infrastructure/${Environment}/terraform.tfstate"
-                    '''
+                            -backend-config="key=ecs-infrastructure/${params.Environment}/terraform.tfstate"
+                    """
                 }
             }
         }
@@ -57,13 +57,14 @@ pipeline {
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws']
                 ]) {
-                    sh '''
+                    sh """
                         echo "========================================"
                         echo "Terraform Validate"
+                        echo "Environment: ${params.Environment}"
                         echo "========================================"
 
                         terraform validate
-                    '''
+                    """
                 }
             }
         }
@@ -80,15 +81,15 @@ pipeline {
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws']
                 ]) {
-                    sh '''
+                    sh """
                         echo "========================================"
                         echo "Terraform Plan"
-                        echo "Environment: ${Environment}"
+                        echo "Environment: ${params.Environment}"
                         echo "========================================"
 
                         terraform plan \
-                            -var-file="environments/${Environment}.tfvars"
-                    '''
+                            -var-file="environments/${params.Environment}.tfvars"
+                    """
                 }
             }
         }
@@ -105,16 +106,16 @@ pipeline {
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws']
                 ]) {
-                    sh '''
+                    sh """
                         echo "========================================"
                         echo "Terraform Apply"
-                        echo "Environment: ${Environment}"
+                        echo "Environment: ${params.Environment}"
                         echo "========================================"
 
                         terraform apply \
-                            -var-file="environments/${Environment}.tfvars" \
+                            -var-file="environments/${params.Environment}.tfvars" \
                             -auto-approve
-                    '''
+                    """
                 }
             }
         }
@@ -131,16 +132,16 @@ pipeline {
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws']
                 ]) {
-                    sh '''
+                    sh """
                         echo "========================================"
                         echo "Terraform Destroy"
-                        echo "Environment: ${Environment}"
+                        echo "Environment: ${params.Environment}"
                         echo "========================================"
 
                         terraform destroy \
-                            -var-file="environments/${Environment}.tfvars" \
+                            -var-file="environments/${params.Environment}.tfvars" \
                             -auto-approve
-                    '''
+                    """
                 }
             }
         }
