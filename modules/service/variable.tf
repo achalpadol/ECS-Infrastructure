@@ -63,3 +63,7 @@ variable "DB_CONTAINER_PORT" {
 variable "DB_DESIRED_COUNT" {
   type = number
 }
+variable "DB_SECURITY_GROUP_ID" {
+  description = "Security group ID for database ECS service"
+  type        = string
+}
