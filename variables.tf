@@ -210,7 +210,4 @@ variable "DB_PASSWORD" {
 variable "DB_USER" {
   type = string
 }
-variable "DB_SECURITY_GROUP_ID" {
-  description = "Security group ID for database ECS service"
-  type        = string
-}
+
