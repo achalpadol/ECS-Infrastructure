@@ -61,7 +61,7 @@ resource "aws_ecs_service" "this_db_service" {
   network_configuration {
     subnets = var.PRIVATE_APP_SUBNET_IDS
     security_groups = [
-      var.ECS_SECURITY_GROUP_ID
+      var.DB_SECURITY_GROUP_ID
     ]
     assign_public_ip = false
   }
