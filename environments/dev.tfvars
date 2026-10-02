@@ -103,17 +103,17 @@ LOG_RETENTION_DAYS      = 7
 #ECR Repo
 ECR_REPOSITORIES = {
   backend = {
-    name                 = "app1-backend-dev"
+    name                 = "app3-backend-dev"
     image_tag_mutability = "MUTABLE"
     scan_on_push         = true
   }
   frontend = {
-    name                 = "app1-frontend-dev"
+    name                 = "app3-frontend-dev"
     image_tag_mutability = "MUTABLE"
     scan_on_push         = true
   }
   db = {
-    name                 = "app1-db-dev"
+    name                 = "app3-db-dev"
     image_tag_mutability = "MUTABLE"
     scan_on_push         = true
   }
