@@ -29,14 +29,6 @@ SECURITY_GROUPS = {
         to_port     = 80
         protocol    = "tcp"
         cidr_ipv4   = "0.0.0.0/0"
-      },
-
-      {
-        description = "Allow HTTPS traffic"
-        from_port   = 443
-        to_port     = 443
-        protocol    = "tcp"
-        cidr_ipv4   = "0.0.0.0/0"
       }
     ]
     egress_rules = [
@@ -60,6 +52,13 @@ SECURITY_GROUPS = {
         to_port                    = 8080
         protocol                   = "tcp"
         source_security_group_name = "alb"
+      },
+      {
+        description = "Allow HTTP traffic"
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+        cidr_ipv4   = "0.0.0.0/0"
       }
     ]
     egress_rules = [

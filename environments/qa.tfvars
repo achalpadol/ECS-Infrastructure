@@ -1,20 +1,19 @@
-AWS_REGION = "ap-south-1"
+AWS_REGION              = "ap-south-1"
+VPC_NAME                = "qa-vpc"
+VPC_CIDR                = "10.1.0.0/16"
 
-VPC_NAME = "qa-vpc"
+PUBLIC_SUBNET_1_CIDR    = "10.1.1.0/24"
+PUBLIC_SUBNET_1_AZ      = "ap-south-1a"
 
-VPC_CIDR = "10.1.0.0/16"
-
-PUBLIC_SUBNET_1_CIDR = "10.0.1.0/24"
-PUBLIC_SUBNET_1_AZ   = "ap-south-1a"
-PUBLIC_SUBNET_2_CIDR = "10.0.4.0/24"
-PUBLIC_SUBNET_2_AZ   = "ap-south-1b"
+PUBLIC_SUBNET_2_CIDR    = "10.1.4.0/24"
+PUBLIC_SUBNET_2_AZ      = "ap-south-1b"
 
 PRIVATE_APP_SUBNET_CIDR = "10.1.2.0/24"
 PRIVATE_APP_SUBNET_AZ   = "ap-south-1a"
 
-PRIVATE_DB_SUBNET_CIDR = "10.1.3.0/24"
-PRIVATE_DB_SUBNET_AZ   = "ap-south-1b"
-
+PRIVATE_DB_SUBNET_CIDR  = "10.1.3.0/24"
+PRIVATE_DB_SUBNET_AZ    = "ap-south-1b"
+# Common Tags
 COMMON_TAGS = {
   Environment = "qa"
   Project     = "ECS-Infrastructure"
@@ -23,7 +22,7 @@ COMMON_TAGS = {
 }
 # Security Groups
 SECURITY_GROUPS = {
-  # ALB Security Group
+# ALB Security Group
   alb = {
     name        = "qa-alb-sg"
     description = "Security group for Application Load Balancer"
@@ -32,14 +31,6 @@ SECURITY_GROUPS = {
         description = "Allow HTTP traffic"
         from_port   = 80
         to_port     = 80
-        protocol    = "tcp"
-        cidr_ipv4   = "0.0.0.0/0"
-      },
-
-      {
-        description = "Allow HTTPS traffic"
-        from_port   = 443
-        to_port     = 443
         protocol    = "tcp"
         cidr_ipv4   = "0.0.0.0/0"
       }
@@ -61,10 +52,17 @@ SECURITY_GROUPS = {
     ingress_rules = [
       {
         description                = "Allow application traffic from ALB"
-        from_port                  = 8000
-        to_port                    = 8000
+        from_port                  = 8080
+        to_port                    = 8080
         protocol                   = "tcp"
         source_security_group_name = "alb"
+      },
+      {
+        description = "Allow HTTP traffic"
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+        cidr_ipv4   = "0.0.0.0/0"
       }
     ]
     egress_rules = [
@@ -83,9 +81,9 @@ SECURITY_GROUPS = {
     description = "Security group for database"
     ingress_rules = [
       {
-        description                = "Allow PostgreSQL traffic from ECS"
-        from_port                  = 5432
-        to_port                    = 5432
+        description                = "Allow MySQL traffic from ECS"
+        from_port                  = 3306
+        to_port                    = 3306
         protocol                   = "tcp"
         source_security_group_name = "ecs"
       }
@@ -101,29 +99,29 @@ SECURITY_GROUPS = {
     ]
   }
 }
-#iam cloudwatch
+# IAM / CloudWatch
 ECS_EXECUTION_ROLE_NAME = "ecsTaskExecutionRole-qa"
 LOG_GROUP_NAME          = "/ecs/qa"
 LOG_RETENTION_DAYS      = 7
-#ECR Repo
+# ECR Repositories
 ECR_REPOSITORIES = {
   backend = {
-    name                 = "app1-backend-qa"
+    name                 = "app3-backend-qa"
     image_tag_mutability = "MUTABLE"
     scan_on_push         = true
   }
   frontend = {
-    name                 = "app1-frontend-qa"
+    name                 = "app3-frontend-qa"
     image_tag_mutability = "MUTABLE"
     scan_on_push         = true
   }
   db = {
-    name                 = "app1-db-qa"
+    name                 = "app3-db-qa"
     image_tag_mutability = "MUTABLE"
     scan_on_push         = true
   }
 }
-#CloudMap
+# Cloud Map
 CLOUD_MAP_NAMESPACE = "ecs.qa.local"
 CLOUD_MAP_SERVICES = {
   backend = {
@@ -139,36 +137,39 @@ CLOUD_MAP_SERVICES = {
     failure_threshold = 1
   }
 }
-#ALB
+# ALB
 ALB_NAME                   = "qa-app-alb"
 TARGET_GROUP_NAME          = "qa-app-tg"
-TARGET_GROUP_PORT          = 8000
+TARGET_GROUP_PORT          = 80
 HEALTH_CHECK_PATH          = "/"
 ENABLE_DELETION_PROTECTION = false
-# ECS CLUSTER
-ECS_CLUSTER_NAME        = "qa-app-cluster"
+# ECS Cluster
+ECS_CLUSTER_NAME = "qa-app-cluster"
+# FRONTEND
 FRONTEND_TASK_FAMILY    = "qa-frontend"
 FRONTEND_SERVICE_NAME   = "qa-frontend-service"
-FRONTEND_IMAGE          = "hashicorp/http-echo:1.0"
-FRONTEND_CONTAINER_PORT = 8000
+FRONTEND_IMAGE          = "nginx:latest"
+FRONTEND_CONTAINER_PORT = 80
 FRONTEND_CPU            = 256
 FRONTEND_MEMORY         = 512
-FRONTEND_DESIRED_COUNT  = 2
+FRONTEND_DESIRED_COUNT  = 1
 # BACKEND
 BACKEND_TASK_FAMILY    = "qa-backend"
 BACKEND_SERVICE_NAME   = "qa-backend-service"
 BACKEND_IMAGE          = "hashicorp/http-echo:1.0"
-BACKEND_CONTAINER_PORT = 8000
+BACKEND_CONTAINER_PORT = 8080
 BACKEND_CPU            = 256
 BACKEND_MEMORY         = 512
-BACKEND_DESIRED_COUNT  = 2
+BACKEND_DESIRED_COUNT  = 1
 # DATABASE
 DB_TASK_FAMILY    = "qa-db"
 DB_SERVICE_NAME   = "qa-db-service"
-DB_IMAGE          = "postgres:16-alpine"
-DB_CONTAINER_PORT = 5432
-DB_CPU            = 512
-DB_MEMORY         = 1024
+DB_IMAGE          = "mysql:8.0"
+DB_CONTAINER_PORT = 3306
+DB_CPU             = 512
+DB_MEMORY          = 1024
 DB_DESIRED_COUNT  = 1
-DB_PASSWORD       = "QaPassword123!"
-DB_NAME           = "appdb"
+DB_NAME           = "example"
+MYSQL_HOST        = "db.ecs.qa.local"
+DB_PASSWORD       = "Achal123"
+DB_USER           = "root"
