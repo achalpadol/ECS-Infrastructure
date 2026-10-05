@@ -18,13 +18,12 @@ COMMON_TAGS = {
 }
 # Security Groups
 SECURITY_GROUPS = {
-  # ALB Security Group
   alb = {
     name        = "dev-alb-sg"
     description = "Security group for Application Load Balancer"
     ingress_rules = [
       {
-        description = "Allow HTTP traffic"
+        description = "Allow HTTP from internet"
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
@@ -41,24 +40,38 @@ SECURITY_GROUPS = {
       }
     ]
   }
-  # ECS Security Group
-  ecs = {
-    name        = "dev-ecs-sg"
-    description = "Security group for ECS services"
+  frontend = {
+    name        = "dev-frontend-sg"
+    description = "Security group for frontend ECS service"
     ingress_rules = [
       {
-        description                = "Allow application traffic from ALB"
+        description                = "Allow HTTP from ALB"
+        from_port                  = 80
+        to_port                    = 80
+        protocol                   = "tcp"
+        source_security_group_name = "alb"
+      }
+    ]
+    egress_rules = [
+      {
+        description = "Allow all outbound traffic"
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_ipv4   = "0.0.0.0/0"
+      }
+    ]
+  }
+  backend = {
+    name        = "dev-backend-sg"
+    description = "Security group for backend ECS service"
+    ingress_rules = [
+      {
+        description                = "Allow backend traffic from frontend"
         from_port                  = 8080
         to_port                    = 8080
         protocol                   = "tcp"
-        source_security_group_name = "alb"
-      },
-      {
-        description = "Allow HTTP traffic"
-        from_port   = 80
-        to_port     = 80
-        protocol    = "tcp"
-        cidr_ipv4   = "0.0.0.0/0"
+        source_security_group_name = "frontend"
       }
     ]
     egress_rules = [
@@ -71,17 +84,16 @@ SECURITY_GROUPS = {
       }
     ]
   }
-  # DB Security Group
   db = {
     name        = "dev-db-sg"
-    description = "Security group for database"
+    description = "Security group for database ECS service"
     ingress_rules = [
       {
-        description                = "Allow PostgreSQL traffic from ECS"
+        description                = "Allow MySQL traffic from backend"
         from_port                  = 3306
         to_port                    = 3306
         protocol                   = "tcp"
-        source_security_group_name = "ecs"
+        source_security_group_name = "backend"
       }
     ]
     egress_rules = [

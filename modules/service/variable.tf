@@ -10,9 +10,6 @@ variable "ECS_CLUSTER_ARN" {
 variable "PRIVATE_APP_SUBNET_IDS" {
   type = list(string)
 }
-variable "ECS_SECURITY_GROUP_ID" {
-  type = string
-}
 # ALB
 variable "TARGET_GROUP_ARN" {
   type = string
@@ -37,6 +34,10 @@ variable "FRONTEND_CONTAINER_PORT" {
 variable "FRONTEND_DESIRED_COUNT" {
   type = number
 }
+variable "FRONTEND_SECURITY_GROUP_ID" {
+  description = "Security group ID for frontend ECS service"
+  type        = string
+}
 # BACKEND
 variable "BACKEND_TASK_DEFINITION_ARN" {
   type = string
@@ -49,6 +50,10 @@ variable "BACKEND_CONTAINER_PORT" {
 }
 variable "BACKEND_DESIRED_COUNT" {
   type = number
+}
+variable "BACKEND_SECURITY_GROUP_ID" {
+  description = "Security group ID for backend ECS service"
+  type        = string
 }
 # DATABASE
 variable "DB_TASK_DEFINITION_ARN" {

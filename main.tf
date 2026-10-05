@@ -108,8 +108,9 @@ module "ecs_service" {
   PRIVATE_APP_SUBNET_IDS = [
     module.vpc.PRIVATE_APP_SUBNET_ID
   ]
-  ECS_SECURITY_GROUP_ID = module.security_group.SECURITY_GROUP_IDS["ecs"]
-  DB_SECURITY_GROUP_ID = module.security_group.SECURITY_GROUP_IDS["db"]
+  FRONTEND_SECURITY_GROUP_ID = module.security_group.SECURITY_GROUP_IDS["frontend"]
+  BACKEND_SECURITY_GROUP_ID  = module.security_group.SECURITY_GROUP_IDS["backend"]
+  DB_SECURITY_GROUP_ID       = module.security_group.SECURITY_GROUP_IDS["db"]
   # ALB
   TARGET_GROUP_ARN = module.alb.TARGET_GROUP_ARN
   # CLOUD MAP

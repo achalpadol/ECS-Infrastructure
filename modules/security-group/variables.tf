@@ -4,7 +4,6 @@ variable "VPC_ID" {
 }
 variable "COMMON_TAGS" {
   description = "Common tags applied to all security group resources"
-
   type = map(string)
 
   default = {}
