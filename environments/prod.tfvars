@@ -9,14 +9,13 @@ PRIVATE_APP_SUBNET_CIDR = "10.3.2.0/24"
 PRIVATE_APP_SUBNET_AZ   = "ap-south-1a"
 PRIVATE_DB_SUBNET_CIDR  = "10.3.3.0/24"
 PRIVATE_DB_SUBNET_AZ    = "ap-south-1b"
-
+#COMMON TAGS
 COMMON_TAGS = {
   Environment = "prod"
   Project     = "ECS-Infrastructure"
   ManagedBy   = "Terraform"
   Owner       = "Achal"
 }
-
 # Security Groups
 SECURITY_GROUPS = {
   alb = {
@@ -41,7 +40,6 @@ SECURITY_GROUPS = {
       }
     ]
   }
-
   frontend = {
     name        = "prod-frontend-sg"
     description = "Security group for frontend ECS service"
@@ -64,7 +62,6 @@ SECURITY_GROUPS = {
       }
     ]
   }
-
   backend = {
     name        = "prod-backend-sg"
     description = "Security group for backend ECS service"
@@ -87,7 +84,6 @@ SECURITY_GROUPS = {
       }
     ]
   }
-
   db = {
     name        = "prod-db-sg"
     description = "Security group for database ECS service"
@@ -111,12 +107,10 @@ SECURITY_GROUPS = {
     ]
   }
 }
-
 # iam cloudwatch
 ECS_EXECUTION_ROLE_NAME = "ecsTaskExecutionRole-prod"
 LOG_GROUP_NAME          = "/ecs/prod"
 LOG_RETENTION_DAYS      = 7
-
 # ECR Repo
 ECR_REPOSITORIES = {
   backend = {
@@ -135,7 +129,6 @@ ECR_REPOSITORIES = {
     scan_on_push         = true
   }
 }
-
 # CloudMap
 CLOUD_MAP_NAMESPACE = "ecs.prod.local"
 CLOUD_MAP_SERVICES = {
@@ -152,17 +145,14 @@ CLOUD_MAP_SERVICES = {
     failure_threshold = 1
   }
 }
-
 # ALB
 ALB_NAME                   = "prod-app-alb"
 TARGET_GROUP_NAME          = "prod-app-tg"
 TARGET_GROUP_PORT          = 80
 HEALTH_CHECK_PATH          = "/"
 ENABLE_DELETION_PROTECTION = false
-
 # ECS CLUSTER
-ECS_CLUSTER_NAME = "prod-app-cluster"
-
+ECS_CLUSTER_NAME        = "prod-app-cluster"
 # FRONTEND
 FRONTEND_TASK_FAMILY    = "prod-frontend"
 FRONTEND_SERVICE_NAME   = "prod-frontend-service"
@@ -171,7 +161,6 @@ FRONTEND_CONTAINER_PORT = 80
 FRONTEND_CPU            = 256
 FRONTEND_MEMORY         = 512
 FRONTEND_DESIRED_COUNT  = 1
-
 # BACKEND
 BACKEND_TASK_FAMILY    = "prod-backend"
 BACKEND_SERVICE_NAME   = "prod-backend-service"
@@ -180,7 +169,6 @@ BACKEND_CONTAINER_PORT = 8080
 BACKEND_CPU            = 256
 BACKEND_MEMORY         = 512
 BACKEND_DESIRED_COUNT  = 1
-
 # DATABASE
 DB_TASK_FAMILY    = "prod-db"
 DB_SERVICE_NAME   = "prod-db-service"

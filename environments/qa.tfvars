@@ -9,14 +9,12 @@ PRIVATE_APP_SUBNET_CIDR = "10.1.2.0/24"
 PRIVATE_APP_SUBNET_AZ   = "ap-south-1a"
 PRIVATE_DB_SUBNET_CIDR  = "10.1.3.0/24"
 PRIVATE_DB_SUBNET_AZ    = "ap-south-1b"
-
 COMMON_TAGS = {
   Environment = "qa"
   Project     = "ECS-Infrastructure"
   ManagedBy   = "Terraform"
   Owner       = "Achal"
 }
-
 # Security Groups
 SECURITY_GROUPS = {
   alb = {
@@ -41,7 +39,6 @@ SECURITY_GROUPS = {
       }
     ]
   }
-
   frontend = {
     name        = "qa-frontend-sg"
     description = "Security group for frontend ECS service"
@@ -64,7 +61,6 @@ SECURITY_GROUPS = {
       }
     ]
   }
-
   backend = {
     name        = "qa-backend-sg"
     description = "Security group for backend ECS service"
@@ -87,7 +83,6 @@ SECURITY_GROUPS = {
       }
     ]
   }
-
   db = {
     name        = "qa-db-sg"
     description = "Security group for database ECS service"
@@ -111,12 +106,10 @@ SECURITY_GROUPS = {
     ]
   }
 }
-
 # iam cloudwatch
 ECS_EXECUTION_ROLE_NAME = "ecsTaskExecutionRole-qa"
 LOG_GROUP_NAME          = "/ecs/qa"
 LOG_RETENTION_DAYS      = 7
-
 # ECR Repo
 ECR_REPOSITORIES = {
   backend = {
@@ -135,7 +128,6 @@ ECR_REPOSITORIES = {
     scan_on_push         = true
   }
 }
-
 # CloudMap
 CLOUD_MAP_NAMESPACE = "ecs.qa.local"
 CLOUD_MAP_SERVICES = {
@@ -152,17 +144,14 @@ CLOUD_MAP_SERVICES = {
     failure_threshold = 1
   }
 }
-
 # ALB
 ALB_NAME                   = "qa-app-alb"
 TARGET_GROUP_NAME          = "qa-app-tg"
 TARGET_GROUP_PORT          = 80
 HEALTH_CHECK_PATH          = "/"
 ENABLE_DELETION_PROTECTION = false
-
 # ECS CLUSTER
 ECS_CLUSTER_NAME = "qa-app-cluster"
-
 # FRONTEND
 FRONTEND_TASK_FAMILY    = "qa-frontend"
 FRONTEND_SERVICE_NAME   = "qa-frontend-service"
@@ -171,7 +160,6 @@ FRONTEND_CONTAINER_PORT = 80
 FRONTEND_CPU            = 256
 FRONTEND_MEMORY         = 512
 FRONTEND_DESIRED_COUNT  = 1
-
 # BACKEND
 BACKEND_TASK_FAMILY    = "qa-backend"
 BACKEND_SERVICE_NAME   = "qa-backend-service"
@@ -180,7 +168,6 @@ BACKEND_CONTAINER_PORT = 8080
 BACKEND_CPU            = 256
 BACKEND_MEMORY         = 512
 BACKEND_DESIRED_COUNT  = 1
-
 # DATABASE
 DB_TASK_FAMILY    = "qa-db"
 DB_SERVICE_NAME   = "qa-db-service"

@@ -9,7 +9,7 @@ PRIVATE_APP_SUBNET_CIDR = "10.0.2.0/24"
 PRIVATE_APP_SUBNET_AZ   = "ap-south-1a"
 PRIVATE_DB_SUBNET_CIDR  = "10.0.3.0/24"
 PRIVATE_DB_SUBNET_AZ    = "ap-south-1b"
-
+# COMMON TAGS
 COMMON_TAGS = {
   Environment = "dev"
   Project     = "ECS-Infrastructure"
