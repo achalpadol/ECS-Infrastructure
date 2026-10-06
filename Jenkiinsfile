@@ -36,7 +36,7 @@ pipeline {
 
                         aws sts get-caller-identity
 
-                        terraform init -reconfigure -backend-config="backend/${params.Environment}.tfbackend"
+                        terraform init -reconfigure -backend-config="backend/${params.Environment}.tfstate"
                     """
                 }
             }
