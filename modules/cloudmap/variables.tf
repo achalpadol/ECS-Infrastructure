@@ -2,10 +2,6 @@ variable "VPC_ID" {
   description = "VPC ID where Cloud Map namespace will be created"
   type        = string
 }
-/*variable "ENVIRONMENT" {
-  description = "Environment name"
-  type        = string
-}*/
 variable "CLOUD_MAP_NAMESPACE" {
   description = "Cloud Map private DNS namespace"
   type        = string
