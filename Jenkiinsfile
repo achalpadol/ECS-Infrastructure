@@ -36,8 +36,7 @@ pipeline {
 
                         aws sts get-caller-identity
 
-                        terraform init -reconfigure \ 
-                            -backend-config="backend/${params.Environment}.tfbackend"
+                        terraform init -reconfigure -backend-config="backend/${params.Environment}.tfbackend"
                     """
                 }
             }
@@ -82,8 +81,7 @@ pipeline {
                         echo "Environment: ${params.Environment}"
                         echo "========================================"
 
-                        terraform plan \
-                            -var-file="environments/${params.Environment}.tfvars"
+                        terraform plan -var-file="environments/${params.Environment}.tfvars"
                     """
                 }
             }
@@ -108,9 +106,7 @@ pipeline {
                                 echo "Environment: ${params.Environment}"
                                 echo "========================================"
 
-                                terraform apply \
-                                    -var-file="environments/${params.Environment}.tfvars" \
-                                    -auto-approve
+                                terraform apply -var-file="environments/${params.Environment}.tfvars" -auto-approve
                             """
 
                         } else {
@@ -121,8 +117,7 @@ pipeline {
                                 echo "Environment: ${params.Environment}"
                                 echo "========================================"
 
-                                terraform apply \
-                                    -var-file="environments/${params.Environment}.tfvars"
+                                terraform apply -var-file="environments/${params.Environment}.tfvars"
                             """
                         }
                     }
@@ -146,8 +141,7 @@ pipeline {
                         echo "Environment: ${params.Environment}"
                         echo "========================================"
 
-                        terraform destroy \
-                            -var-file="environments/${params.Environment}.tfvars" \
+                        terraform destroy -var-file="environments/${params.Environment}.tfvars" \
                             -auto-approve
                     """
                 }
