@@ -11,9 +11,14 @@ pipeline {
             choices: ['init', 'plan', 'apply', 'destroy'],
             description: 'Select the Terraform action'
         )
+        booleanParam(
+            name: 'Auto_Approve',
+            defaultValue: false,
+            description: 'Automatically approve Terraform apply/destroy'
+        )
     }
     environment {
-        AWS_REGION = 'ap-south-1'
+        AWS_REGION         = 'ap-south-1'
         AWS_DEFAULT_REGION = 'ap-south-1'
     }
     stages {
@@ -31,8 +36,8 @@ pipeline {
 
                         aws sts get-caller-identity
 
-                        terraform init -reconfigure \
-                            -backend-config="key=ecs-infrastructure/${params.Environment}/terraform.tfstate"
+                        terraform init -reconfigure \ 
+                            -backend-config="backend/${params.Environment}.tfbackend"
                     """
                 }
             }
@@ -94,16 +99,33 @@ pipeline {
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws']
                 ]) {
-                    sh """
-                        echo "========================================"
-                        echo "Terraform Apply"
-                        echo "Environment: ${params.Environment}"
-                        echo "========================================"
+                    script {
+                        if (params.Auto_Approve) {
 
-                        terraform apply \
-                            -var-file="environments/${params.Environment}.tfvars" \
-                            -auto-approve
-                    """
+                            sh """
+                                echo "========================================"
+                                echo "Terraform Apply - Auto Approved"
+                                echo "Environment: ${params.Environment}"
+                                echo "========================================"
+
+                                terraform apply \
+                                    -var-file="environments/${params.Environment}.tfvars" \
+                                    -auto-approve
+                            """
+
+                        } else {
+
+                            sh """
+                                echo "========================================"
+                                echo "Terraform Apply - Manual Approval Required"
+                                echo "Environment: ${params.Environment}"
+                                echo "========================================"
+
+                                terraform apply \
+                                    -var-file="environments/${params.Environment}.tfvars"
+                            """
+                        }
+                    }
                 }
             }
         }
@@ -136,13 +158,12 @@ pipeline {
         success {
             echo "Terraform ${params.Terraform_Action} completed successfully for ${params.Environment}"
         }
-
         failure {
             echo "Terraform ${params.Terraform_Action} failed for ${params.Environment}"
         }
-
         always {
             cleanWs()
         }
     }
 }
+
